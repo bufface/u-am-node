@@ -5,34 +5,48 @@ mongoose.connect('mongodb://localhost:27017/TodoApp');
 
 var Todo = mongoose.model('Todo', {
   text: {
-    type: String
+    type: String,
+    required: true,
+    minlength: 1,
+    trim: true
   },
   complete: {
-    type: Boolean
+    type: Boolean,
+    default: false
   },
   completeAt: {
-    type: Number
+    type: Number,
+    default: null
   }
 });
 
-// var newTodo = new Todo({
-//   text: 'Cook dinner'
+// var otherTodo = new Todo({
+//   text: 'Something to do'
 // });
 
-// newTodo.save().then((doc) => {
-//   console.log('Saved todo', doc);
+// otherTodo.save().then((doc) => {
+//   console.log(JSON.stringify(doc, undefined, 2));
 // }, (e) => {
-//   console.log('Unable to save todo');
-//   });
+//   console.log('Unable to save', e);
+//  });
 
-var otherTodo = new Todo({
-  text: 'Feed the cat',
-  complete: true,
-  completeAt: 123
+// User
+// email - require it - trim it - set type - set min length of 1
+var User = mongoose.model('User', {
+  email: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 1
+  }
 });
 
-otherTodo.save().then((doc) => {
-  console.log(JSON.stringify(doc, undefined, 2));
+var user = new User({
+  email: 'cristian@example.com    '
+});
+
+user.save().then((doc) => {
+  console.log('User saved', doc);
 }, (e) => {
-  console.log('Unable to save', e);
- });
+  console.log('Unable to save user', e);
+})
